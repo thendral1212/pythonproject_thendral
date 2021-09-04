@@ -50,12 +50,15 @@ def get_all_questions():
 
 @app.route("/question/<int:id>", methods=["GET"])
 def get_question_by_id(id):
-    questions = Question.query.filter_by(id=id).first()
+    question = Question.query.filter_by(id=id).first()
     data = []
-    for q in questions:
+    #for q in questions:
+    if question:
         data.append({
-            "id": q.id,
-            "title": q.title,
-            "Description": q.Description,
+            "id": question.id,
+            "title": question.title,
+            "Description": question.Description,
         })
         return {"Status": "Success","data":data},200
+    else:
+        return {"Status": "Failure","Message":"Question not found"},404
